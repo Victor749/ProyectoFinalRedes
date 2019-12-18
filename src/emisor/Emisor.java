@@ -22,6 +22,7 @@ public class Emisor {
             System.out.print("> ");
             mensajeCadena = escaner.nextLine();
             if (mensajeCadena.compareTo("salir") != 0) {
+                /* Colocar IP y Puerto Necesarios */
                 Socket emisor = new Socket("localhost"/*"192.168.96.10"*/,4500);
                 System.out.println("Enviando mensaje al Receptor... ");
                 ObjectOutputStream mensaje = new ObjectOutputStream(emisor.getOutputStream());
