@@ -5,11 +5,8 @@
  */
 package controlador;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -17,29 +14,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import modelo.Emisor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTick;
-import org.jfree.chart.axis.Tick;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.AbstractCategoryItemRenderer;
-import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import vista.VistaEmisor;
@@ -59,32 +41,6 @@ public class CtrlVistaEmisor implements ActionListener {
         this.vista.JBotonAbrir.addActionListener(this);
         this.vista.JBotonEnviar.addActionListener(this);
         this.vista.JBotonEnviar.setEnabled(false);
-        
-        this.vista.jTextFieldBits.addKeyListener(new KeyListener(){
-            @Override
-            public void keyTyped(KeyEvent ke) {
-                
-            }
-
-            @Override
-            public void keyPressed(KeyEvent ke) {
-                
-            }
-
-            @Override
-            public void keyReleased(KeyEvent ke) {
-                JFreeChart chart = createGraph();
-                ChartPanel chartPanel = new ChartPanel(chart);
-                chartPanel.setPreferredSize(new java.awt.Dimension(500, 300));
-
-                vista.jInternalFrameGrafico.setContentPane(chartPanel);
-                
-                vista.pack();
-            }
-            
-        });
-        
-        
         this.vista.setSize(300, 150);
         this.vista.setTitle("Emisor");
         this.vista.setLocationRelativeTo(null);
@@ -120,15 +76,24 @@ public class CtrlVistaEmisor implements ActionListener {
                     texto = readFile(ruta, StandardCharsets.ISO_8859_1);
                     this.emisor.setTexto(texto);
                     this.vista.JBotonEnviar.setEnabled(true);
+                    emisor.entramar();
+                    reportar(emisor.iniciarConexion());
                 }
             } catch(IOException ex) {
                 error("Error de Archivo: " + ex.getMessage());
             }
         } else {
             try {
-                reportar(emisor.iniciarConexion());
+                JFreeChart chart = createGraph();
+                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel.setPreferredSize(new java.awt.Dimension(500, 300));
+                vista.jInternalFrameGrafico.setContentPane(chartPanel);
+                vista.pack();
                 reportar(emisor.emitir());
-                reportar(emisor.cerrarConexion());
+                if (emisor.getTramaActual() == emisor.getNumeroTramas()) {
+                    this.vista.JBotonEnviar.setEnabled(false);
+                    reportar(emisor.cerrarConexion());
+                }
             } catch (IOException | ClassNotFoundException ex) {
                 error("Error de Envío: " + ex.getMessage());
             }
@@ -137,44 +102,28 @@ public class CtrlVistaEmisor implements ActionListener {
     
     
     private JFreeChart createGraph(){
-        
         setData();
-        
         String playResults = "Play Results";
         XYSeriesCollection dataset = new XYSeriesCollection();
         XYSeries  data = new XYSeries("Trama");
-
-        //ArrayList<Float[]> array1 = new ArrayList<Float[]>();
-        //array1.putAll(playMap);
         for (Float[] arregloFloats : playMap) {
             data.add(arregloFloats[0],arregloFloats[1]);  //(y,x)
             System.out.println("X: " + arregloFloats[0] + " Y: "+ arregloFloats[1] );
         }
-
         dataset.addSeries(data);
-        
-        JFreeChart chart = ChartFactory.createXYLineChart("Codigicación Manchester", "bits", "V",  dataset);
-        
+        JFreeChart chart = ChartFactory.createXYLineChart("Codificación Manchester", "bits", "V",  dataset);
         XYPlot  plot = (XYPlot)chart.getPlot();
         ValueAxis domainAxis = plot.getDomainAxis();
         ValueAxis rangeAxis = plot.getRangeAxis();
         domainAxis.setVisible(false);
         rangeAxis.setVisible(false);
         rangeAxis.setRange(-1, 1.5 );
-        /*CategoryAxis rangeAxis = (CategoryAxis)plot.getD();
-        CategoryAxis domainAxis = plot.getDomainAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis.setRange(-0.1, 1.1);
-        domainAxis.setVisible(true);
-       
-        */
-        return chart;
-        
+        return chart;      
     }
     
     private void setData(){
         
-        String bits = this.vista.jTextFieldBits.getText();
+        String bits = emisor.getCadenaTramaActual();
         char[] arrayBits = bits.toCharArray();
         
         playMap.removeAll(playMap);
@@ -205,9 +154,5 @@ public class CtrlVistaEmisor implements ActionListener {
         }
         
     }
-    
-    
-    
-    
     
 }

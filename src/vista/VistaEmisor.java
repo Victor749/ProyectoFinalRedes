@@ -34,8 +34,6 @@ public class VistaEmisor extends javax.swing.JFrame {
         JBotonEnviar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTextLog = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldBits = new javax.swing.JTextField();
         jInternalFrameGrafico = new javax.swing.JInternalFrame();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,7 +51,7 @@ public class VistaEmisor extends javax.swing.JFrame {
         JBotonAbrir.setText("Abrir Archivo");
 
         JBotonEnviar.setFont(new java.awt.Font("Tw Cen MT", 0, 14)); // NOI18N
-        JBotonEnviar.setText("Enviar Archivo");
+        JBotonEnviar.setText("Enviar Trama");
 
         JTextLog.setEditable(false);
         JTextLog.setColumns(20);
@@ -61,25 +59,17 @@ public class VistaEmisor extends javax.swing.JFrame {
         JTextLog.setRows(5);
         jScrollPane1.setViewportView(JTextLog);
 
-        jLabel3.setText("Cadena a Enviar:");
-
-        jTextFieldBits.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldBitsActionPerformed(evt);
-            }
-        });
-
         jInternalFrameGrafico.setVisible(true);
 
         javax.swing.GroupLayout jInternalFrameGraficoLayout = new javax.swing.GroupLayout(jInternalFrameGrafico.getContentPane());
         jInternalFrameGrafico.getContentPane().setLayout(jInternalFrameGraficoLayout);
         jInternalFrameGraficoLayout.setHorizontalGroup(
             jInternalFrameGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 294, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jInternalFrameGraficoLayout.setVerticalGroup(
             jInternalFrameGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 211, Short.MAX_VALUE)
+            .addGap(0, 225, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -87,32 +77,27 @@ public class VistaEmisor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(252, 252, 252)
-                                .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldBits, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
-                                    .addComponent(JTextRuta, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(201, 201, 201)
-                                        .addComponent(JBotonEnviar)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBotonAbrir)))
-                        .addGap(26, 26, 26)
-                        .addComponent(jInternalFrameGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(JTextRuta)
+                                .addGap(18, 18, 18)
+                                .addComponent(JBotonAbrir)
+                                .addGap(18, 18, 18)
+                                .addComponent(JBotonEnviar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(281, 281, 281)
+                        .addComponent(jLabel2)
+                        .addGap(0, 276, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jInternalFrameGrafico)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,35 +105,22 @@ public class VistaEmisor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JTextRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBotonAbrir))
-                        .addGap(30, 30, 30)
-                        .addComponent(JBotonEnviar)
-                        .addGap(61, 61, 61)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jTextFieldBits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jInternalFrameGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTextRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBotonAbrir)
+                    .addComponent(JBotonEnviar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jInternalFrameGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextFieldBitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBitsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldBitsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,8 +165,6 @@ public class VistaEmisor extends javax.swing.JFrame {
     public javax.swing.JInternalFrame jInternalFrameGrafico;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public javax.swing.JTextField jTextFieldBits;
     // End of variables declaration//GEN-END:variables
 }

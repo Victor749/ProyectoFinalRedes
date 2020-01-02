@@ -27,11 +27,12 @@ public class Receptor extends Thread {
     }
     
     public String iniciarConexion() {
-        return "Iniciando Receptor...\n¡Receptor Listo y a la Espera!\n";
+        mensaje = "";
+        return "¡Receptor Listo y a la Espera!\n\n";
     }
     
     public String cerrarConexion() {
-        return "Apagando Receptor...\n¡Receptor Apagado!\n";
+        return "Archivo Recibido: " + mensaje + "\n\n";
     }
     
     public void recibir(String trama) {
@@ -49,13 +50,19 @@ public class Receptor extends Thread {
             while (true) {
                 Socket clienteNuevo = receptor.accept();
                 ObjectInputStream entrada = new ObjectInputStream(clienteNuevo.getInputStream());
-                String mensaje = (String) entrada.readObject();
-                String reporte = "Mensaje Recibido: " + mensaje + '\n';
+                Trama trama = (Trama) entrada.readObject();
+                mensaje += trama.getTrama();
+                ctrl.graficar(trama.getTramaBin());
+                String reporte = "Trama " + trama.getNumero() + " Recibida: Cadena (" + trama.getTrama() + ") ASCII: "  + trama.getTramaBin() + '\n';
                 reporte += "Enviando ACK al Emisor... " + '\n';
                 ObjectOutputStream salida = new ObjectOutputStream(clienteNuevo.getOutputStream());
-                salida.writeObject("OK");
-                reporte += "ACK enviado con éxito.";
+                salida.writeObject("OK: Trama " + trama.getNumero());
+                reporte += "ACK enviado con éxito." + "\n\n";
                 recibir(reporte);
+                if (trama.isUltimo()) {
+                    ctrl.reportar(cerrarConexion());
+                    ctrl.reportar(iniciarConexion());
+                }
                 clienteNuevo.close(); 
             }
         } catch(IOException | ClassNotFoundException ex) {
@@ -64,6 +71,7 @@ public class Receptor extends Thread {
     }
     
     private int tamanioBufer;
+    private String mensaje;
     private final CtrlVistaReceptor ctrl;
     
 }
