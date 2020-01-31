@@ -1,9 +1,10 @@
+
 /* PILAAAS: https://www.youtube.com/watch?v=m2dFjkZVlVw
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package hamming;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +24,14 @@ public class Hamming {
     
     public static void main(String[] args){
         
-        Hamming hm = new Hamming("011100101110");
+        Hamming hm = new Hamming("1000110");
         Integer indiceErrorDetectado = hm.detectarError();
-        System.out.println("El error esta en el indice: " + indiceErrorDetectado );
+        if(indiceErrorDetectado != -1){
+            System.out.println("El error esta en el indice: " + indiceErrorDetectado );
+        }else{
+            System.out.println("No hay error en la trama");
+        }
+        
         
     }
 
@@ -126,19 +132,27 @@ public class Hamming {
         Map<Integer, Integer> map = new HashMap<>();
 
         for (Integer t : sobrantes) {
+            System.out.println("El valor sobrante es: " + t);
             Integer val = map.get(t);
             map.put(t, val == null ? 1 : val + 1);
         }
 
         Entry<Integer, Integer> max = null;
-
+        
+        Integer maximoVeces = -1;
+        Integer indiceError = -1;
+        
+        
         for (Entry<Integer, Integer> e : map.entrySet()) {
-            if (max == null || e.getValue() > max.getValue())
-                max = e;
+            System.out.println("El valor es: " + e.getValue());
+            System.out.println("El entry set es: " + String.valueOf(map.entrySet()));
+            if (max == null || e.getValue() > maximoVeces)
+                maximoVeces = e.getValue();
+                indiceError = e.getKey();
         }
         
-        return max.getKey();
         
+        return indiceError;
     }
     
 }
